@@ -1,0 +1,51 @@
+1. Ssh intro you instance
+
+wget https://downloads.apache.org/kafka/3.7.0/kafka_2.13-3.7.0.tgz
+tar -xvf kafka_2.13-3.7.0.tgz
+
+
+-----------------------
+java -version
+sudo yum install java-1.8.0
+java -version
+cd kafka_2.13-3.7.0
+
+2.
+Start Zoo-keeper:
+-------------------------------
+Open another window to start Kafka
+ssh to to your ec2 machine as done above
+
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+
+
+Start Kafka-server:
+----------------------------------------
+Open another window to start Kafka
+ssh to to your ec2 machine as done above
+
+export KAFKA_HEAP_OPTS="-Xmx256M -Xms128M"
+
+cd kafka_2.13-3.7.0
+bin/kafka-server-start.sh config/server.properties
+
+--- It is pointing to private server , change server.properties so that it can run in public IP of the instance ---
+sudo nano config/server.properties - change ADVERTISED_LISTENERS to public ip of the EC2 instance
+
+3.
+Create the topic:
+-----------------------------
+Duplicate the session & enter in a new console --
+cd kafka_2.13-3.7.0
+bin/kafka-topics.sh --create --topic netfli_data --bootstrap-server {Put the Public IP of your EC2 Instance:9092} --replication-factor 1 --partitions 1
+
+Start Producer:
+--------------------------
+bin/kafka-console-producer.sh --topic netfli_data --bootstrap-server {Put the Public IP of your EC2 Instance:9092} 
+
+Start Consumer:
+-------------------------
+Duplicate the session & enter in a new console --
+cd kafka_2.12-3.3.1
+bin/kafka-console-consumer.sh --topic netfli_data --bootstrap-server ec2-34-235-117-147.compute-1.amazonaws.com:9092
