@@ -1,4 +1,5 @@
 # Kafka_streaming_project
+##### This project dataset is from Kaggle; it contains all the metadata on Netflix for TV shows and movies. The project is to simulate Real-time streaming for movie details using Kafka. We used different technologies such as Python, Amazon EC2, Apache Kafka, Glue, Athena, and SQL.
 
 
 ## Launch an ec2 on AWS 
